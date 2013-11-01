@@ -1,4 +1,4 @@
 my-contact-list
 ===============
 
-Simple Contact Management application to demonstrate usability
+Simple Contact Management application to demonstrate usability in web applications
