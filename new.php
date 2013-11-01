@@ -1,3 +1,9 @@
+<?php
+require_once (dirname(__FILE__)) . '/libs/DBUtils.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,25 +42,28 @@
         </ul>
         <h3 class="text-muted">My Contacts</h3>
       </div>
+      <?php
+      Utils::showSessionMessage();
+      ?>
 
-      <form class="form-horizontal form-input" role="form">
+      <form class="form-horizontal form-input" role="form" method="post" action="libs/controller.php?a=new">
         <h2 class="form-input-heading">New Contact</h2>
         <div class="form-group">
           <label for="name" class="col-sm-2 control-label">Name</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="name" placeholder="Name">
+            <input type="text" class="form-control" name="name" id="name" placeholder="Name">
           </div>
         </div>
         <div class="form-group">
           <label for="phone-number" class="col-sm-2 control-label">Phone Number</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="phone-number" placeholder="Phone Number">
+            <input type="text" class="form-control" name="phoneNumber" id="phone-number" placeholder="Phone Number">
           </div>
         </div>
         <div class="form-group">
           <label for="email" class="col-sm-2 control-label">Email</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" id="email" placeholder="Email">
+            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
           </div>
         </div>
         
@@ -71,5 +80,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>

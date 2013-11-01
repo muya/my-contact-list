@@ -1,3 +1,9 @@
+<?php
+require_once (dirname(__FILE__)) . '/libs/DBUtils.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -37,6 +43,9 @@
         </ul>
         <h3 class="text-muted">My Contacts</h3>
       </div>
+      <?php
+      Utils::showSessionMessage();
+      ?>
 
       <div class="jumbotron">
         <h1>Contacts</h1>
@@ -51,5 +60,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>

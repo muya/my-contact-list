@@ -1,3 +1,7 @@
+<?php
+//destroy any existing sessions before continuing
+session_destroy();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -46,5 +50,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
