@@ -1,3 +1,9 @@
+<?php
+require_once (dirname(__FILE__)) . '/libs/DBUtils.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,48 +42,44 @@
         </ul>
         <h3 class="text-muted">My Contacts</h3>
       </div>
+      <?php
+        $contactList = Utils::getContactList();
+      ?>
 
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
               <th>#</th>
-              <th>Table heading</th>
-              <th>Table heading</th>
-              <th>Table heading</th>
-              <th>Table heading</th>
-              <th>Table heading</th>
-              <th>Table heading</th>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Email Address</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-            </tr>
+            <?php
+              if($contactList['STAT_TYPE'] != SC_SUCCESS_CODE){
+                ?>
+                <tr><td colspan="4" style="text-align: center"><?php echo $contactList['STAT_DESCRIPTION']; ?></td></tr>
+                <?php
+              }
+              else if ($contactList['STAT_TYPE'] == SC_SUCCESS_CODE && $contactList['DATA'] == null){
+                ?>
+                <tr><td colspan="4" style="text-align: center"><?php echo $contactList['STAT_DESCRIPTION']; ?></td></tr>
+                <?php
+              }
+              else{
+                foreach ($contactList['DATA'] as $record) {
+                  $row = '<tr>'
+                    .'<td>'.$record['id'].'</td>'
+                    .'<td><a href="view_contact.php?id='.$record['id'].'">'.$record['name'].'</a></td>'
+                    .'<td>'.$record['phoneNumber'].'</td>'
+                    .'<td>'.$record['email'].'</td>'
+                    .'</tr>';
+                    echo $row;
+                }
+              }
+            ?>
           </tbody>
         </table>
       </div>

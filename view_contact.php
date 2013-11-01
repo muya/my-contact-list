@@ -1,3 +1,9 @@
+<?php
+require_once (dirname(__FILE__)) . '/libs/DBUtils.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -37,27 +43,47 @@
         <h3 class="text-muted">My Contacts</h3>
       </div>
       <h2>View Contact</h2>
+      <?php
+        if(!isset($_GET['id']) || ($_GET['id'] == '')){
+          Utils::setSessionMessage('danger', 'An error occurred. Please try again.');
+          header('Location: '.ROOT_URL.'contacts.php');
+          exit();
+        }
+        $singleContact = Utils::getContactList($_GET['id']);
+        if($singleContact['STAT_TYPE'] != SC_SUCCESS_CODE){
+          Utils::setSessionMessage('danger', $singleContact['STAT_DESCRIPTION']);
+          Utils::showSessionMessage();
+          
+        }
+        else if ($singleContact['STAT_TYPE'] == SC_SUCCESS_CODE && $singleContact['DATA'] == null){
+          Utils::setSessionMessage('warning', $singleContact['STAT_DESCRIPTION']);
+          Utils::showSessionMessage();
+        }
+        else{
+          ?>
       <div class="table-responsive">
         <table class="table table-striped">
           <tbody>
             <tr>
               <th>Name</th>
-              <td>Fred Muya</td>
+              <td><?php echo isset($singleContact['DATA'][0]['name']) ? $singleContact['DATA'][0]['name'] : null; ?></td>
             </tr>
             <tr>
               <th>Email</th>
-              <td>drwho@example.com</td>
+              <td><?php echo isset($singleContact['DATA'][0]['email']) ? $singleContact['DATA'][0]['email'] : null; ?></td>
             </tr>
             <tr>
-              <th>PHone Number</th>
-              <td>0712345678</td>
+              <th>Phone Number</th>
+              <td><?php echo isset($singleContact['DATA'][0]['phoneNumber']) ? $singleContact['DATA'][0]['phoneNumber'] : null; ?></td>
             </tr>
           </tr>
           </tbody>
        
       </table>
       </div>
-
+          <?php
+        }
+      ?>
     </div> <!-- /container -->
 
 

@@ -10,7 +10,7 @@ class Contact{
 	public function __construct($contactDetails){
 		$this->name = (isset($contactDetails['name'])) ? $contactDetails['name'] : null;
 		$this->phoneNumber = (isset($contactDetails['phoneNumber'])) ? $contactDetails['phoneNumber'] : null;
-		$this->emailAddress = (isset($contactDetails['emailAddress'])) ? $contactDetails['emailAddress'] : null;
+		$this->emailAddress = (isset($contactDetails['email'])) ? $contactDetails['email'] : null;
 	}
 
 	public function validate(){

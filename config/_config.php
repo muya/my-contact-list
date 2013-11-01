@@ -23,4 +23,4 @@ define('FATAL', 'FATAL');
 define('SYSTEM_LOG_LEVEL', 10);
 
 //root url
-define('ROOT_URL', 'http://192.168.252.216/ContactList/');
+define('ROOT_URL', 'http://localhost/ContactList/');

@@ -423,4 +423,33 @@ class Utils {
         return; 
     }
 
+    public static function getContactList($id = null){
+        if($id == null){
+            $fetchContactsQuery = 'select id, name, phoneNumber, email from '
+                .' contacts order by 1 asc';
+            $fetchContactsParams = array();
+        }
+        else{
+            $fetchContactsQuery = 'select id, name, phoneNumber, email from '
+                .' contacts where id=:id limit 1';
+            $fetchContactsParams = array(':id' => $id);
+        }
+        $fetchContactsResponse = DBUtils::executePreparedStatement($fetchContactsQuery, $fetchContactsParams);
+        if(!isset($fetchContactsResponse['STAT_TYPE']) || ($fetchContactsResponse['STAT_TYPE'] != SC_SUCCESS_CODE)){
+            //an error occurred while fetching data
+            Utils::log(ERROR, 'error occurred while fetching contacts: '
+                .json_encode($fetchContactsResponse), __CLASS__, __FUNCTION__, __LINE__);
+            return Utils::formatResponse(null, SC_FAILURE_CODE, SC_FAILURE_CODE, 'Unable to fetch contacts. Try again later.');
+        }
+        else{
+            Utils::log(INFO, 'fetched contacts successfully: '
+                .json_encode($fetchContactsResponse), __CLASS__, __FUNCTION__, __LINE__);
+            if($fetchContactsResponse['DATA'] == null){
+                return Utils::formatResponse(null, SC_SUCCESS_CODE, SC_SUCCESS_CODE, 'No contacts are available yet.');
+            }
+            else{
+                return Utils::formatResponse($fetchContactsResponse['DATA'], SC_SUCCESS_CODE, SC_SUCCESS_CODE, null);
+            }
+        }
+    }
 }
