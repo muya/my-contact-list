@@ -43,6 +43,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <h3 class="text-muted">My Contacts</h3>
       </div>
       <?php
+        Utils::showSessionMessage();
         $contactList = Utils::getContactList();
       ?>
 
@@ -54,6 +55,7 @@ if (session_status() == PHP_SESSION_NONE) {
               <th>Name</th>
               <th>Phone Number</th>
               <th>Email Address</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -75,6 +77,10 @@ if (session_status() == PHP_SESSION_NONE) {
                     .'<td><a href="view_contact.php?id='.$record['id'].'">'.$record['name'].'</a></td>'
                     .'<td>'.$record['phoneNumber'].'</td>'
                     .'<td>'.$record['email'].'</td>'
+                    .'<td>'
+                      .'<a title="Click to update" href="update_contact.php?id='.$record['id'].'&name='.urlencode($record['name']).'&phoneNumber='.urlencode($record['phoneNumber']).'&email='.urlencode($record['email']).'">'.'<span class="glyphicon glyphicon-edit"></span>'.'</a>'
+                      .'&nbsp;&nbsp;<a title="Click to remove" href="remove_contact.php?id='.$record['id'].'">'.'<span class="glyphicon glyphicon-trash"></span>'.'</a>'
+                    .'</td>'
                     .'</tr>';
                     echo $row;
                 }

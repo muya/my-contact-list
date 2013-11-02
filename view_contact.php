@@ -44,6 +44,7 @@ if (session_status() == PHP_SESSION_NONE) {
       </div>
       <h2>View Contact</h2>
       <?php
+        Utils::showSessionMessage();
         if(!isset($_GET['id']) || ($_GET['id'] == '')){
           Utils::setSessionMessage('danger', 'An error occurred. Please try again.');
           header('Location: '.ROOT_URL.'contacts.php');

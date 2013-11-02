@@ -118,7 +118,7 @@ class DBUtils {
         }
         try {
 
-            Utils::log('INFO', 'SQL TO BE EXECUTED: ' . $SQL, __LINE__, __FUNCTION__);
+            Utils::log('INFO', 'SQL TO BE EXECUTED: ' . $SQL .' | PARAMS: '.json_encode($params), __LINE__, __FUNCTION__);
             $stmt = $dbConn->prepare($SQL);
             $executeStatus = $stmt->execute($params);
             if ($noFetch == true) {
